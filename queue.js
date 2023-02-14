@@ -2,7 +2,7 @@ import { readdir, readFile, stat, writeFile, unlink } from "node:fs/promises";
 import path from "node:path";
 import https from "node:https";
 import fs from "node:fs";
-import replicate from "replicate";
+import replicate from "./replicate-js/index.js";
 import prompts from "./prompts.json" assert { type: "json" };
 import util from "util";
 import child_process from "child_process";
