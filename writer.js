@@ -4,7 +4,7 @@ import { Queue } from "./queue.js";
 const MINUTES = 60 * 1000;
 const TARGET_QUEUE_LENGTH = 10 * MINUTES;
 const FRAMES = 500;
-const FRAME_RATE = 20;
+const FRAME_RATE = 15;
 
 async function main() {
   await mkdir("queue", { recursive: true });
