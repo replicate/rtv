@@ -20,7 +20,7 @@ It will generate tiles in parallel at whatever rate is needed to keep a 5 minute
 
 ### Broadcaster
 
-Broadcaster takes tiles in the `tiles` directory and broadcasts them to Mux using ffmpeg in order. When a tile has been successfully broadcast, it gets deleted from the queue.
+Broadcaster takes tiles in the `queue` directory and broadcasts them in order to Mux using ffmpeg. When a tile has been successfully broadcast, it gets deleted from the queue.
 
 ## Deploy
 
