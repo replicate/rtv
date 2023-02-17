@@ -65,7 +65,14 @@ async function main() {
     }
 
     console.log("\n\nBroadcasting", item.outputPath(), "...\n\n");
-    await pipeFileToProcess(item.outputPath(), ffmpeg);
+    try {
+      await pipeFileToProcess(item.outputPath(), ffmpeg);
+    } catch (e) {
+      console.error("Failed to pipe file to ffmpeg:", e);
+      // Cautiously delete this item in the queue in case something weird is going on
+      await queue.shift();
+      break;
+    }
     await queue.shift();
   }
 }

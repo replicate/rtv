@@ -108,9 +108,22 @@ export class Item {
   }
 
   async remove() {
-    await unlink(this.metadataPath());
+    // Wrap in lots of catches to ensure we actually delete broken data
+    try {
+      await unlink(this.metadataPath());
+    } catch (e) {
+      if (e.code !== "ENOENT") {
+        console.error(e);
+      }
+    }
     if (await this.outputExists()) {
-      await unlink(this.outputPath());
+      try {
+        await unlink(this.outputPath());
+      } catch (e) {
+        if (e.code !== "ENOENT") {
+          console.error(e);
+        }
+      }
     }
   }
 }
