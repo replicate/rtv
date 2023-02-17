@@ -6,7 +6,7 @@ Stick 'em in `prompts.json`.
 
 ## How to run it
 
-You need to set `REPLICATE_API_TOKEN` and `RTML` in your environment then run `node writer.js` and `node broadcaster.js` in separate terminals.
+You need to set `REPLICATE_API_TOKEN` and `RTML_URL` in your environment then run `node writer.js` and `node broadcaster.js` in separate terminals.
 
 ## How it works
 
