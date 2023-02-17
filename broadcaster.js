@@ -59,9 +59,9 @@ async function main() {
 
     // Next item in the queue is still processing... wait a bit
     if (!item.outputExists()) {
-      console.log("Run out of stuff! Waiting...");
-      sleep(100);
-      continue;
+      console.log("Run out of stuff! Restarting...");
+      // Quit because ffmpeg gets unhappy if we stop sending it some data for a while, so just restart the whole thing
+      break;
     }
 
     console.log("\n\nBroadcasting", item.outputPath(), "...\n\n");
