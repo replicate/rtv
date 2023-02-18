@@ -36,7 +36,7 @@ async function main() {
     console.error("Failed to start subprocess.");
   });
 
-  await sleep(2000);
+  await sleep(1000);
 
   console.log("Starting broadcast...");
   const queue = new Queue();
@@ -75,6 +75,8 @@ async function main() {
     }
     await queue.shift();
   }
+  ffmpeg.stdin.end();
+  ffmpeg.kill();
 }
 
 async function pipeFileToProcess(filePath, process) {
