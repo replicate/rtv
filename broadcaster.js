@@ -60,7 +60,9 @@ async function main() {
     if (item.prediction.status === "failed") {
       console.log("Skipping failed item", item.number);
       await queue.shift();
-      continue;
+      // might have timed out and ffmpeg gets stuck sometimes if it pauses for
+      // too long
+      break;
     }
 
     // Next item in the queue is still processing... wait a bit
