@@ -10,25 +10,31 @@ async function main() {
   const ffmpeg = child_process.spawn(
     "ffmpeg",
     [
-      "-fflags",
-      "+discardcorrupt",
-      "-re",
-      "-i",
-      "-",
-      // https://docs.mux.com/guides/video/configure-broadcast-software#recommended-encoder-settings
-      // "-b:v", "10000k",
-      // "-vcodec", "h264",
-      // https://trac.ffmpeg.org/wiki/Encode/H.264#LosslessH.264
-      "-c:v",
-      "libx264",
-      "-preset",
-      "ultrafast",
-      "-qp",
-      "0",
-      // https://trac.ffmpeg.org/wiki/Encode/H.264
-      "-f",
-      "flv",
-      process.env.RTMP_URL,
+      "-fflags",         // set input flags
+
+      "+discardcorrupt", // discard corrupted packets
+
+      "-re",             // read input at the native frame rate
+
+      "-i",              // input file or stream specifier
+
+      "-",               // input is stdin
+
+      // "-b:v", "10000k",  // set the video bitrate to 10000 kbps
+      // "-vcodec", "h264", // use the H.264 video codec
+
+      "-c:v",            // video codec to use for encoding
+      "libx264",         // use the libx264 codec
+
+      "-preset",         // set encoding preset
+      "ultrafast",       // use the ultrafast preset for fast encoding
+
+      "-qp",             // set constant quantization parameter (CQP) value
+      "0",               // set CQP to 0 for lossless encoding
+
+      "-f",              // set output format
+      "flv",             // use the FLV format for output
+      process.env.RTMP_URL, // output file or stream specifier
     ],
     { stdio: ["pipe", process.stdout, process.stderr] }
   );
