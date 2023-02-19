@@ -32,8 +32,6 @@ async function main() {
       "-qp",             // set constant quantization parameter (CQP) value
       "0",               // set CQP to 0 for lossless encoding
 
-      "-f",              // set output format
-      "flv",             // use the FLV format for output
       process.env.RTMP_URL, // output file or stream specifier
     ],
     { stdio: ["pipe", process.stdout, process.stderr] }
