@@ -1,11 +1,11 @@
-import { readdir, readFile, stat, writeFile, unlink } from "node:fs/promises";
-import path from "node:path";
-import https from "node:https";
-import fs from "node:fs";
-import replicate from "./replicate-js/index.js";
-import prompts from "./prompts.json" assert { type: "json" };
-import util from "util";
 import child_process from "child_process";
+import fs from "node:fs";
+import { readdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
+import https from "node:https";
+import path from "node:path";
+import replicate from "replicate";
+import util from "util";
+import prompts from "./prompts.json" assert { type: "json" };
 const exec = util.promisify(child_process.exec);
 
 export class Item {
@@ -33,10 +33,11 @@ export class Item {
   }
 
   async createPrediction() {
-    this.prediction = await replicate.predictions.create({
-      version:
-        "a819625e6d8b1884f0c5328cec39a7296737ab9bb4d1ea1d8a31a916cafa27bf",
-      input: {
+    this.prediction = await replicate
+      .version(
+        "a819625e6d8b1884f0c5328cec39a7296737ab9bb4d1ea1d8a31a916cafa27bf"
+      )
+      .createPrediction({
         prompt_start: this.promptStart,
         seed_start: this.seedStart,
         prompt_end: this.promptEnd,
@@ -48,8 +49,7 @@ export class Item {
         num_interpolation_steps: 50,
         frames_per_second: this.frameRate,
         seed: 1,
-      },
-    });
+      });
   }
 
   async update() {
@@ -58,9 +58,7 @@ export class Item {
       this.prediction.status !== "failed" &&
       this.prediction.status !== "cancelled"
     ) {
-      this.prediction = await replicate.predictions.get({
-        id: this.prediction.id,
-      });
+      this.prediction = await replicate.prediction(this.prediction.id).load();
       if (!this.prediction.id) {
         // error handling...
         return;
