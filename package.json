@@ -8,5 +8,8 @@
   },
   "author": "",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "make-promises-safe": "^5.1.0"
+  }
 }

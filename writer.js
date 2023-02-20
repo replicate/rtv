@@ -1,3 +1,4 @@
+import "make-promises-safe";
 import { mkdir } from "node:fs/promises";
 import { Queue } from "./queue.js";
 

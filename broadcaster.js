@@ -1,3 +1,4 @@
+import "make-promises-safe";
 import { mkdir } from "node:fs/promises";
 import { Queue } from "./queue.js";
 import child_process from "node:child_process";
