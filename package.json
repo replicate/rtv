@@ -10,6 +10,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "make-promises-safe": "^5.1.0"
+    "make-promises-safe": "^5.1.0",
+    "replicate": "^0.3.0"
   }
 }
