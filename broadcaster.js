@@ -63,16 +63,14 @@ async function main() {
     if (item.prediction.status === "failed") {
       console.log("Skipping failed item", item.number);
       await queue.shift();
-      // might have timed out and ffmpeg gets stuck sometimes if it pauses for
-      // too long
-      break;
+      continue;
     }
 
     // Next item in the queue is still processing... wait a bit
-    if (!item.outputExists()) {
-      console.log("Run out of stuff! Restarting...");
-      // Quit because ffmpeg gets unhappy if we stop sending it some data for a while, so just restart the whole thing
-      break;
+    if (!(await item.outputExists())) {
+      console.log("Run out of stuff! Waiting...");
+      sleep(1000);
+      continue;
     }
 
     console.log("\n\nBroadcasting", item.outputPath(), "...\n\n");
