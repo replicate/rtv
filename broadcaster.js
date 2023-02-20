@@ -10,29 +10,29 @@ async function main() {
   const ffmpeg = child_process.spawn(
     "ffmpeg",
     [
-      "-fflags",         // set input flags
+      "-fflags", // set input flags
 
       "+discardcorrupt", // discard corrupted packets
 
-      "-re",             // read input at the native frame rate
+      "-re", // read input at the native frame rate
 
-      "-i",              // input file or stream specifier
+      "-i", // input file or stream specifier
 
-      "-",               // input is stdin
+      "-", // input is stdin
 
       // "-b:v", "10000k",  // set the video bitrate to 10000 kbps
       // "-vcodec", "h264", // use the H.264 video codec
 
-      "-c:v",            // video codec to use for encoding
-      "libx264",         // use the libx264 codec
+      "-c:v", // video codec to use for encoding
+      "libx264", // use the libx264 codec
 
-      "-preset",         // set encoding preset
-      "ultrafast",       // use the ultrafast preset for fast encoding
+      "-preset", // set encoding preset
+      "ultrafast", // use the ultrafast preset for fast encoding
 
-      "-qp",             // set constant quantization parameter (CQP) value
-      "0",               // set CQP to 0 for lossless encoding
+      "-qp", // set constant quantization parameter (CQP) value
+      "0", // set CQP to 0 for lossless encoding
 
-      "-an",             // remove audio from the output
+      "-an", // remove audio from the output
 
       process.env.RTMP_URL, // output file or stream specifier
     ],
@@ -90,10 +90,14 @@ async function main() {
 async function pipeFileToProcess(filePath, process) {
   // todo: ignore missing files
   return new Promise((resolve, reject) => {
-    fs.createReadStream(filePath)
-      .pipe(process.stdin, { end: false })
-      .on("unpipe", resolve)
-      .on("error", reject);
+    try {
+      fs.createReadStream(filePath)
+        .pipe(process.stdin, { end: false })
+        .on("unpipe", resolve)
+        .on("error", reject);
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 
