@@ -198,6 +198,9 @@ export class Queue {
 
   async restartTimedOutItems() {
     for (const item of this.items) {
+      if (item.prediction.status === "succeeded") {
+        continue;
+      }
       const elapsed = Date.now() - Date.parse(item.prediction.created_at);
       if (elapsed > 1000 * 60 * 5) {
         console.log("Restarting timed out item", item.number);
