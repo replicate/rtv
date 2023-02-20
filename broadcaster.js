@@ -53,18 +53,11 @@ async function main() {
   while (true) {
     await queue.load();
     if (queue.items.length === 0) {
-      sleep(100);
+      sleep(1000);
       continue;
     }
 
     const item = queue.items[0];
-
-    // todo: timeout / retry?
-    if (item.prediction.status === "failed") {
-      console.log("Skipping failed item", item.number);
-      await queue.shift();
-      continue;
-    }
 
     // Next item in the queue is still processing... wait a bit
     if (!(await item.outputExists())) {

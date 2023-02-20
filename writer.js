@@ -17,6 +17,8 @@ async function main() {
     console.log("Updating", queue.items.length, "items...");
     await queue.update();
 
+    await queue.restartTimedOutItems();
+
     const queueLength = queue.totalTime();
 
     if (queueLength < TARGET_QUEUE_LENGTH) {

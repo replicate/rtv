@@ -27,26 +27,29 @@ export class Item {
     item.frames = frames;
     item.frameRate = frameRate;
 
-    item.prediction = await replicate.predictions.create({
+    await item.createPrediction();
+    await item.save();
+    return item;
+  }
+
+  async createPrediction() {
+    this.prediction = await replicate.predictions.create({
       version:
         "a819625e6d8b1884f0c5328cec39a7296737ab9bb4d1ea1d8a31a916cafa27bf",
       input: {
-        prompt_start: item.promptStart,
-        seed_start: item.seedStart,
-        prompt_end: item.promptEnd,
-        seed_end: item.seedEnd,
+        prompt_start: this.promptStart,
+        seed_start: this.seedStart,
+        prompt_end: this.promptEnd,
+        seed_end: this.seedEnd,
         width: 1024,
         height: 768,
         num_inference_steps: 20,
-        num_animation_frames: Math.floor(item.frames / 50),
+        num_animation_frames: Math.floor(this.frames / 50),
         num_interpolation_steps: 50,
-        frames_per_second: item.frameRate,
+        frames_per_second: this.frameRate,
         seed: 1,
       },
     });
-
-    await item.save();
-    return item;
   }
 
   async update() {
@@ -191,6 +194,17 @@ export class Queue {
       time += (item.frames / item.frameRate) * 1000;
     }
     return time;
+  }
+
+  async restartTimedOutItems() {
+    for (const item of this.items) {
+      const elapsed = Date.now() - Date.parse(item.prediction.created_at);
+      if (elapsed > 1000 * 60 * 5) {
+        console.log("Restarting timed out item", item.number);
+        await item.createPrediction();
+        await item.save();
+      }
+    }
   }
 }
 
