@@ -62,7 +62,7 @@ async function main() {
     // Next item in the queue is still processing... wait a bit
     if (!(await item.outputExists())) {
       console.log("Run out of stuff! Waiting...");
-      sleep(1000);
+      await sleep(1000);
       continue;
     }
 
