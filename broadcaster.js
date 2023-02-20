@@ -34,6 +34,9 @@ async function main() {
 
       "-an", // remove audio from the output
 
+      "-f", // set output format
+      "flv", // use the FLV format for output
+
       process.env.RTMP_URL, // output file or stream specifier
     ],
     { stdio: ["pipe", process.stdout, process.stderr] }
