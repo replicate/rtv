@@ -2,7 +2,7 @@ import { mkdir } from "node:fs/promises";
 import { Queue } from "./queue.js";
 
 const MINUTES = 60 * 1000;
-const TARGET_QUEUE_LENGTH = 20 * MINUTES;
+const TARGET_QUEUE_LENGTH = 30 * MINUTES;
 const FRAMES = 500;
 const FRAME_RATE = 15;
 
