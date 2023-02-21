@@ -1,5 +1,13 @@
 # RTV
 
+Broadcasting the latest and greatest generative AI, direct to your web browser.
+
+<img width="1511" alt="Screenshot 2023-02-20 at 21 14 51" src="https://user-images.githubusercontent.com/40906/220253777-cde3e00c-8410-4ea7-9de2-812d3391d027.png">
+
+RTV takes a series of prompts and feeds them through [andreasjansson/tile-morph](https://replicate.com/andreasjansson/tile-morph) to create a tiled animation drifting through latent space.
+
+It is broadcast on [the Replicate home page](https://replicate.com/home). If you want to edit our home page, contribute some prompts!
+
 ## How to add prompts
 
 Stick 'em in `prompts.json`.
