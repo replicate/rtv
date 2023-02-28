@@ -7,6 +7,13 @@ const TARGET_QUEUE_LENGTH = 30 * MINUTES;
 const FRAMES = 500;
 const FRAME_RATE = 15;
 
+let exit = false;
+
+process.on("SIGINT", () => {
+  console.log("Exiting...");
+  exit = true;
+});
+
 async function main() {
   await mkdir("queue", { recursive: true });
 
@@ -28,6 +35,10 @@ async function main() {
       for (let i = 0; i < itemsToCreate; i++) {
         await queue.create({ frames: FRAMES, frameRate: FRAME_RATE });
       }
+    }
+
+    if (exit) {
+      break;
     }
 
     await sleep(1000);
