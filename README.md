@@ -54,3 +54,9 @@ total 1661992
 -rw-r--r-- 1 root root  92167940 Feb 15 23:30 1794.ts
 ...
 ```
+
+## Fix it when it breaks
+
+`fly logs` will tell you what broke.
+
+`fly apps restart rtv` might fix it.
