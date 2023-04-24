@@ -164,10 +164,23 @@ export class Queue {
       if (file.endsWith(".json")) {
         let item = new Item();
         // todo: ignore missing files
-        Object.assign(
-          item,
-          JSON.parse(await readFile(path.join("queue", file)))
-        );
+        try {
+          Object.assign(
+            item,
+            JSON.parse(await readFile(path.join("queue", file)))
+          );
+        } catch (e) {
+          console.error(e);
+          // Remove broken JSON
+          try {
+            await unlink(path.join("queue", file));
+          } catch (e) {
+            if (e.code !== "ENOENT") {
+              console.error(e);
+            }
+          }
+          continue;
+        }
         this.items.push(item);
       }
     }
