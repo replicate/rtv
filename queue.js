@@ -68,6 +68,7 @@ export class Item {
 
     if (
       this.prediction.status === "succeeded" &&
+      this.prediction.output &&
       !(await this.outputExists())
     ) {
       await this.download();
@@ -209,7 +210,7 @@ export class Queue {
 
   async restartTimedOutItems() {
     for (const item of this.items) {
-      if (item.prediction.status === "succeeded") {
+      if (item.prediction.status === "succeeded" && item.prediction.output) {
         continue;
       }
       const elapsed = Date.now() - Date.parse(item.prediction.created_at);
