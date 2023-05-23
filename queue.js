@@ -3,10 +3,14 @@ import fs from "node:fs";
 import { readdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
 import https from "node:https";
 import path from "node:path";
-import replicate from "replicate";
+import Replicate from "replicate";
 import util from "util";
 import prompts from "./prompts.json" assert { type: "json" };
 const exec = util.promisify(child_process.exec);
+
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
+});
 
 export class Item {
   static async create({
@@ -33,23 +37,25 @@ export class Item {
   }
 
   async createPrediction() {
-    this.prediction = await replicate
-      .version(
-        "a819625e6d8b1884f0c5328cec39a7296737ab9bb4d1ea1d8a31a916cafa27bf"
-      )
-      .createPrediction({
-        prompt_start: this.promptStart,
-        seed_start: this.seedStart,
-        prompt_end: this.promptEnd,
-        seed_end: this.seedEnd,
-        width: 1024,
-        height: 768,
-        num_inference_steps: 20,
-        num_animation_frames: Math.floor(this.frames / 50),
-        num_interpolation_steps: 50,
-        frames_per_second: this.frameRate,
-        seed: 1,
-      });
+    this.prediction = await replicate.deployments.predictions.create(
+      "replicate",
+      "rtv-tile-morph",
+      {
+        input: {
+          prompt_start: this.promptStart,
+          seed_start: this.seedStart,
+          prompt_end: this.promptEnd,
+          seed_end: this.seedEnd,
+          width: 1024,
+          height: 768,
+          num_inference_steps: 20,
+          num_animation_frames: Math.floor(this.frames / 50),
+          num_interpolation_steps: 50,
+          frames_per_second: this.frameRate,
+          seed: 1,
+        },
+      }
+    );
   }
 
   async update() {
@@ -58,7 +64,7 @@ export class Item {
       this.prediction.status !== "failed" &&
       this.prediction.status !== "cancelled"
     ) {
-      this.prediction = await replicate.prediction(this.prediction.id).load();
+      this.prediction = await replicate.predictions.get(this.prediction.id);
       if (!this.prediction.id) {
         // error handling...
         return;
