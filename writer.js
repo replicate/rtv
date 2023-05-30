@@ -22,7 +22,6 @@ async function main() {
   while (true) {
     await queue.load();
     await queue.update();
-    await queue.restartTimedOutItems();
 
     const queueLength = queue.totalTime();
 
