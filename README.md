@@ -1,4 +1,6 @@
 # RTV
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Freplicate%2Frtv.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Freplicate%2Frtv?ref=badge_shield)
+
 
 Broadcasting the latest and greatest generative AI, direct to your web browser.
 
@@ -60,3 +62,7 @@ total 1661992
 `fly logs` will tell you what broke.
 
 `fly apps restart rtv` might fix it.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Freplicate%2Frtv.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Freplicate%2Frtv?ref=badge_large)
