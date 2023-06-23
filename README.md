@@ -60,3 +60,5 @@ total 1661992
 `fly logs` will tell you what broke.
 
 `fly apps restart rtv` might fix it.
+
+`fly ssh console` then `rm /src/queue/*` if it's really broke.
