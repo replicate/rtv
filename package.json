@@ -11,6 +11,7 @@
   "type": "module",
   "dependencies": {
     "make-promises-safe": "^5.1.0",
-    "replicate": "github:replicate/replicate-javascript#deployments"
+    "replicate": "github:replicate/replicate-javascript#deployments",
+    "request": "^2.88.2"
   }
 }

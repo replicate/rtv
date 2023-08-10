@@ -2,6 +2,7 @@ import child_process from "child_process";
 import fs from "node:fs";
 import { readdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
 import https from "node:https";
+import request from  "request";
 import path from "node:path";
 import Replicate from "replicate";
 import util from "util";
@@ -238,15 +239,13 @@ function randomSeed() {
 
 async function downloadFile(url, fileName) {
   return new Promise((resolve, reject) => {
-    https.get(url, (response) => {
-      response
-        .pipe(fs.createWriteStream(fileName))
-        .on("finish", () => {
-          resolve();
-        })
-        .on("error", (error) => {
-          reject(error);
-        });
-    });
+    request.get(url)
+      .pipe(fs.createWriteStream(fileName))
+      .on("finish", () => {
+        resolve();
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
   });
 }
